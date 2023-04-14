@@ -8,6 +8,8 @@ const handlebars = require('express-handlebars');
 const app = express()
 const port = 3000
 
+
+const site = require('./Routes/site')
 // default log
 app.use(morgan('common'))
 
@@ -21,16 +23,11 @@ app.engine('hbs', handlebars.engine({
   extname: '.hbs'
 }));
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'resources\\views'));
+app.set('views', path.join(__dirname, 'Views'));
 
-app.get('/qk', (req, res) => {
-  console.log(__dirname)
-  res.send('Hello World!')
-})
-app.get('/', (req, res) => {
-  console.log(path.join(__dirname, 'resources\\views'))
-  res.render('home')
-})
+
+app.use('/',site)
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
