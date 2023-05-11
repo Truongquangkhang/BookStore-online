@@ -1,13 +1,13 @@
 
 module.exports.ValidationsCreate = (req, res, next) => {
     if (!req.body.id) {
-        res.status(400).send("Required id")
+        res.status(400).json("Required id")
     }
     else if (!req.body.name) {
-        res.status(400).send("Required name")
+        res.status(400).json("Required name")
     }
     else if (!req.body.author) {
-        res.status(400).send("Required author")
+        res.status(400).json("Required author")
     }
     else {
         next()

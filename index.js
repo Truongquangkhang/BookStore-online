@@ -17,7 +17,7 @@ app.use(express.json())
 // app.use('/',(req,res)=>{
 //   res.send("HOME")
 // })
-app.use('/book', site)
+app.use('/book',authMiddleware ,site)
 app.use('/auth',auth)
 
 

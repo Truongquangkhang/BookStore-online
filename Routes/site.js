@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get('/', BookController.getBook)
 router.post('/',Validations.ValidationsCreate, BookController.addBook)
-router.put('/', BookController.updateBook)
+router.put('/:idbook', BookController.updateBook)
 router.delete('/',Validations.ValidationDelete, BookController.deleteBook)
 
 

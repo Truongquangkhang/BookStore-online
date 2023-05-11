@@ -1,5 +1,4 @@
 const con = require('./db')
-const bcrypt = require("bcrypt")
 const table = "account"
 // const getIDMax = (rs) => {
 //     var query = `select MAX(id) as max_id from ${table}`

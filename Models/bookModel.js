@@ -5,9 +5,8 @@ const getAllBook = (table,callback)=> {
     con.query(sql,callback);
 }
 
-const createBook = (table,param,callback)=>{
+const createBook = async (table,param,callback)=>{
     var sql = `insert into ${table} set ?`
-    console.log(param)
     con.query(sql,param,callback);
 }
 

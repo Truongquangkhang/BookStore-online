@@ -28,30 +28,31 @@ const addBook = async (req,res)=>{
     }
     bookModel.createBook('book',data,(err,rows)=>{
         if(err){
-            console.log(err);
+            res.status(400).json({err:err});
         }
-        res.send("");
+        res.status(200).json("ADD BOOK");
     })
 }
 const updateBook = async(req,res)=>{
+    var idbook = req.params.idbook
     const data ={
-        id: req.body.id,
+        id: idbook,
         name: req.body.name,
         author: req.body.author
     }
     bookModel.updateBook('book',data,(err,rows)=>{
         if(err){
-            console.log(err);
+            res.status(400).json({err:err});
         }
-        res.send("")
+        res.status(200).json("k");
     })
 }
 const deleteBook = async(req,res)=>{
     bookModel.deleteBook('book',req.query.id,(err,row)=>{
         if(err){
-            console.log(err);
+            res.status(400).json({err:err});
         }
-        res.send("")
+        res.status(200).json("DELETE BOOK");
     })
 }
 module.exports = {
