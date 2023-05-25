@@ -1,98 +1,67 @@
-const authModels = require('../Models/authModel')
+const Account = require('../Models/MongoDB/Account')
+const User = require('../Models/MongoDB/User')
 const bcrypt = require("bcrypt");
-const { error } = require('firebase-functions/logger');
 var jwt = require('jsonwebtoken');
 const saltRounds = 10
-var temp;
 
 const token = (data, secret) => {
-
     return jwt.sign(data, secret, { expiresIn: '1h' })
 }
 
-module.exports.Login = (req, res) => {
+module.exports.Register = async (req, res) => {
+    bcrypt.genSalt(saltRounds, function (err, salt) {
+        bcrypt.hash(req.body.password, salt, function (err, hash) {
+            let account = new Account({
+                username: req.body.username,
+                password: hash
+            })
 
-    // CALLBACK
-    // authModels.Login(req.body, (err, rows) => {
-    //     if (err) {
-    //         console.log(err)
-    //         res.status(400).send("ERROR")
-    //     }
-    //     else {
-    //         if (Object.keys(rows).length != 0) {
-    //             var password = JSON.parse(JSON.stringify(rows))[0].password
-    //             console.log(password)
-    //             bcrypt.compare(req.body.password, password, function (err, result) {
-    //                 if (result) {
-    //                     var tk = (token(JSON.parse(JSON.stringify(rows))[0],process.env.SECRETKEY))
-    //                     res.cookie('token' ,tk,{signed:true})
-    //                     res.send("HOME")
+            account.save()
+                .then(rs => {
+                    let user = new User({
+                        name: req.body.name,
+                        account: rs._id
+                    })
 
-    //                 }
-    //                 else {
-    //                     res.send(error = { msg: "password wrong" })
-    //                 }
-    //             });
-    //         }
-    //         else res.send(error = { msg: "email is not available" })
-    //     }
-    // })
-
-
-    var promise = new Promise((resolve, reject) => {
-        authModels.Login(req.body, (err, rows) => {
-            if (err) {
-                reject(err)
-            }
-            else {
-                resolve(JSON.parse(JSON.stringify(rows)))
-            }
+                    user.save()
+                    res.status(200).json("success")
+                })
+                .catch(err => {
+                    res.status(400).json(err)
+                })
         })
     })
-        .then((result) => {
-            return new Promise((resolve, reject) => {
-                bcrypt.compare(req.body.password, result[0].password, (err, rs) => {
-                    if (rs) {
-                        resolve(result[0])
+}
+
+module.exports.Login = async (req, res) => {
+    await Account.findOne({ username: req.body.username })
+        .then(rs => {
+            if ((rs)) {
+                bcrypt.compare(req.body.password, rs.password,async (err, result) => {
+                    if(result){
+                        let user = await User.findOne({account: rs._id})
+                        let tk = token({user},process.env.SECRETKEY)
+                        res.status(200).json(tk)
                     }
-                    else {
-                        reject({ "error": "wrong password" })
+                    else{
+                        res.json("password invalid")
                     }
                 })
-            })
+            }
+            else {
+                res.status(200).json({ err: "username invalid" })
+            }
         })
-        .then((result) => {
-            var tk = token(result, process.env.SECRETKEY)
-            res.cookie('token', tk, { signed: true })
-            res.send('LOGIN')
-        })
-        .catch((err) => { res.status(400).json(err) })
+        .catch(err=>res.status(400).json(err))
 
 }
-module.exports.Register = (req, res) => {
-    const data = {
-        email: req.body.email,
-        password: req.body.password,
-        type: req.body.type
-    }
 
-    bcrypt.genSalt(saltRounds, function (err, salt) {
-        bcrypt.hash(data.password, salt, function (err, hash) {
-            data.password = hash
-            authModels.Register(data, (err, rows) => {
-                if (err) {
-                    console.log(err)
-                    res.status(400).send("ERROR")
-                }
-                else {
-                    res.send(rows)
-                }
-            })
-        });
-    });
-
-}
-module.exports.Logout = (req, res) => {
-    // req.clearCookie("token")
-    res.send(req.cookies)
+module.exports.logout = async (req,res)=>{
+    const authorizationHeader = req.headers.authorization;
+    if (authorizationHeader) {
+        const token = authorizationHeader.split(' ')[1]; // Lấy token từ phần sau "Bearer "
+        console.log(token); // In ra token
+        res.send(token)
+      }
+      
 }

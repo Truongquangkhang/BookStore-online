@@ -1,64 +1,47 @@
-const bookModel = require('../Models/bookModel')
+const Book = require('../Models/MongoDB/Book')
+const Author = require('../Models/MongoDB/Author')
+const Category = require('../Models/MongoDB/Category')
 
-const HomeController =(req,res)=>{
-    res.render('home')
-}
-
-const getBook = (req,res)=>{
-    // pagination
-    var page = 0
-    if(req.query.page){
-        page = req.query.page
-    }
-    var start_item = page*8
-    var end_item = start_item+8
-    bookModel.getAllBook('book',(err,rows)=>{
-        if(err){
-            console.log(err);
-        }
-        var books = JSON.parse(JSON.stringify(rows)).splice(9,17)
+module.exports.getALL = async (req,res)=>{
+    try {
+        let books = await Book.find()
         res.status(200).json(books)
-    })
-}
-const addBook = async (req,res)=>{
-    const data ={
-        id: req.body.id,
-        name: req.body.name,
-        author: req.body.author
+    } catch (error) {
+        res.status(400).json(error)
     }
-    bookModel.createBook('book',data,(err,rows)=>{
-        if(err){
-            res.status(400).json({err:err});
-        }
-        res.status(200).json("ADD BOOK");
-    })
 }
-const updateBook = async(req,res)=>{
-    var idbook = req.params.idbook
-    const data ={
-        id: idbook,
-        name: req.body.name,
+module.exports.findBookByAuthor = async(req,res)=>{
+    Book.findById('646d94a456411696edce2b53').populate('author').exec().then(rs=>res.send(rs))
+}
+module.exports.addBook =  async (req,res)=>{
+    let book = new Book({
+        _name: req.body.name,
+        category: req.body.category,
         author: req.body.author
+    })
+    try {
+        await book.save()
+        res.status(200).json("ADD")
+    } catch (error) {
+        res.status(400).json(error)
     }
-    bookModel.updateBook('book',data,(err,rows)=>{
-        if(err){
-            res.status(400).json({err:err});
+}
+
+module.exports.updateBook = async (req,res)=>{
+    await Book.updateOne(
+        {_id:req.params.id},
+        {
+            _name: req.body.name,
+            author: req.body.author,
+            category: req.body.category
         }
-        res.status(200).json("k");
-    })
+    ).then(rs=>res.status(200).json(rs))
+    .catch(err=>res.status(400).json(err))
 }
-const deleteBook = async(req,res)=>{
-    bookModel.deleteBook('book',req.query.id,(err,row)=>{
-        if(err){
-            res.status(400).json({err:err});
-        }
-        res.status(200).json("DELETE BOOK");
-    })
+
+module.exports.deleteBook = async (req,res)=>{
+    await Book.deleteOne({_id:req.params.id})
+    .then(rs=> res.status(200).json(rs))
+    .catch(err=>res.status(400).json(err))
 }
-module.exports = {
-    HomeController,
-    getBook,
-    addBook,
-    updateBook,
-    deleteBook
-}
+
