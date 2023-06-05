@@ -1,23 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
+import Books from './Features/Books';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import MainLayout from './Components/MainLayout/index';
+import DetailBook from './Features/DetailBook';
+import Todo from './Features/ToDo';
+import BookList from './Components/TestRedux';
+import AddBook from './Features/AddBook';
+import FormAddAuthor from './Components/Form_Control/FormAddAuthor';
+import FormAddCategory from './Components/Form_Control/FormAddCategory'
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/book",
+        element:<Books/>,
+        children: [
+          {
+            path: ':idbook',
+            element: <DetailBook />
+          }
+        ]
+      },
+      {
+        path: '/form',
+        element: <Todo></Todo>
+      },
+      {
+        path: '/redux',
+        element: <BookList></BookList>
+      },
+      {
+        path: '/book/add',
+        element: <AddBook />
+      },
+      {
+        path: '/author/add',
+        element: <FormAddAuthor />
+      },
+      {
+        path: '/category/add',
+        element: <FormAddCategory />
+      }
+    ]
+  },
+
+]);
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <RouterProvider router={router}></RouterProvider>
     </div>
   );
 }

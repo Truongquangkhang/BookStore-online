@@ -1,0 +1,62 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+.book {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 10px;
+  }
+  
+  .book img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    // max-width: 100%;
+    // height: auto;
+    // margin-right: 30px;
+    
+  }
+  .thumnail_item{
+    text-align: center;
+  }
+  .info_book{
+    text-align: center;
+  }
+  // .book-info {
+  //   display: flex;
+  //   flex-direction: column;
+  //   justify-content: center; 
+  // }
+  
+  .book-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
+    text-align: center;
+    font-family:'Oswald';
+  }
+  
+  .book-price {
+    font-size: 1rem;
+    font-weight: lighter;
+    color: rgb(21, 21, 19);
+    margin: 0;
+    text-align: center;
+  }
+  
+
+
+.btn_detail{
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+}
+.btn_buynow{
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  
+}
+  

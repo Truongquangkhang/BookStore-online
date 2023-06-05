@@ -5,7 +5,7 @@ const authMiddleware = require('../Middleware/authMiddleware')
 const Router = express.Router()
 
 Router.get('/',bookController.getALL)
-Router.post('/',authMiddleware.authLogin,bookController.addBook)
+Router.post('/',bookController.addBook)
 Router.put('/:id',authMiddleware.authLogin,bookController.updateBook)
 Router.delete('/:id',authMiddleware.authLogin,bookController.deleteBook)
 

@@ -14,8 +14,12 @@ module.exports.findBookByAuthor = async(req,res)=>{
     Book.findById('646d94a456411696edce2b53').populate('author').exec().then(rs=>res.send(rs))
 }
 module.exports.addBook =  async (req,res)=>{
+    console.log(req.body);
     let book = new Book({
-        _name: req.body.name,
+        name: req.body.name,
+        booksubtitle: req.body.booksubtitle,
+        prices: req.body.prices,
+        images: req.body.images,
         category: req.body.category,
         author: req.body.author
     })
@@ -31,7 +35,7 @@ module.exports.updateBook = async (req,res)=>{
     await Book.updateOne(
         {_id:req.params.id},
         {
-            _name: req.body.name,
+            name: req.body.name,
             author: req.body.author,
             category: req.body.category
         }

@@ -8,6 +8,7 @@ const con = require('./Models/MongoDB/db')
 con.connect()
 const author = require('./Routes/author')
 const book = require('./Routes/book')
+const category = require('./Routes/category')
 const authMiddleware = require('./Middleware/authMiddleware')
 require('dotenv').config()
 
@@ -15,7 +16,7 @@ const app = express()
 const port = 3000
 
 app.use(cookieParser(process.env.SECRETKEY))
-// app.use(morgan('common'))
+app.use(morgan('common'))
 app.use(express.json())
 app.use(cors())
 // app.use('/',(req,res)=>{
@@ -25,6 +26,8 @@ app.use('/book', book)
 app.use('/author', author)
 // app.use('/book',authMiddleware ,site)
 app.use('/auth', auth)
+app.use('/category', category)
+
 
 
 // app.listen(process.env.PORT, () => {

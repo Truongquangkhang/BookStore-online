@@ -3,8 +3,10 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 const Book = new mongoose.Schema({
-    _name: String,
+    name: String,
     booksubtitle: String,
+    prices: String,
+    images:[String],
     category: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',

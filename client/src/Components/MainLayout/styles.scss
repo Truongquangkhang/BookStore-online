@@ -1,0 +1,30 @@
+* {
+  padding: 0;
+  margin-top: 0;
+}
+body{
+  padding: 0px;
+}
+.Container {
+  display: grid;
+  grid-template-columns: 200 1fr 1fr 1fr;
+  grid-template-rows: 100px 1fr 100px;
+  row-gap: 5px;
+  column-gap: 5px;
+}
+
+.Header{
+  grid-column: 1/5;
+}
+.Sidebar{
+  grid-column: 1/2;
+  grid-row: 2/4;
+  border: 2px red;
+}
+.wrapper-body{
+  grid-column: 2/5;
+  grid-row: 2/4;
+  padding: 5px;
+}
+
+
