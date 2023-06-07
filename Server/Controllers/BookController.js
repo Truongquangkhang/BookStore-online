@@ -48,4 +48,15 @@ module.exports.deleteBook = async (req,res)=>{
     .then(rs=> res.status(200).json(rs))
     .catch(err=>res.status(400).json(err))
 }
+const firebase = require('../Firebase/firebase')
+module.exports.test = async (req, res)=>{
+    const files = req.files.images
+    for(let i =0;i<files.length;i++){
+        const blob = firebase.bucket.upload(files[i])
+        
+        
+
+    }
+    
+}
 

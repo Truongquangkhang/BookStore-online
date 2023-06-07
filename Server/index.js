@@ -1,6 +1,7 @@
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+// const fileupload = require("express-fileupload");
 var cookieParser = require('cookie-parser')
 const auth = require('./Routes/auth')
 // const site = require('./Routes/site')
@@ -10,6 +11,8 @@ const author = require('./Routes/author')
 const book = require('./Routes/book')
 const category = require('./Routes/category')
 const authMiddleware = require('./Middleware/authMiddleware')
+
+
 require('dotenv').config()
 
 const app = express()
@@ -19,9 +22,10 @@ app.use(cookieParser(process.env.SECRETKEY))
 app.use(morgan('common'))
 app.use(express.json())
 app.use(cors())
-// app.use('/',(req,res)=>{
-//   res.send("HOME")
-// })
+// app.use(fileupload({createParentPath: true,}));
+app.use(express.urlencoded({ extended: true }));
+
+
 app.use('/book', book)
 app.use('/author', author)
 // app.use('/book',authMiddleware ,site)
@@ -33,6 +37,7 @@ app.use('/category', category)
 // app.listen(process.env.PORT, () => {
 //   console.log(`Example app listening on port ${process.env.PORT}`)
 // })
+
 
 const { ApolloServer, gql } = require('apollo-server-express');
 const typeDefs = require('./GraphQL/Schema')

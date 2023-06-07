@@ -1,38 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
+import apiBook from "../../../API/apiBook";
 
-const UploadAndDisplayImage = () => {
+function TestUploadFile() {
+  const { register, handleSubmit } = useForm();
 
-  const [selectedImage, setSelectedImage] = useState(null);
+  const onSubmit = async (data) => {
+      const formData = new FormData();
+      formData.append("images", data.file[0]);
+      apiBook.test(formData)
+  };
 
   return (
-    <div>
+      <div className="App">
+          <form onSubmit={handleSubmit(onSubmit)}>
+              <input type="file" {...register("file")} />
 
-      {selectedImage && (
-        <div>
-          <img
-            alt="not found"
-            width={"250px"}
-            src={URL.createObjectURL(selectedImage)}
-          />
-          <br />
-          <button onClick={() => setSelectedImage(null)}>Remove</button>
-        </div>
-      )}
-
-      <br />
-      <br />
-      
-      <input
-        type="file"
-        name="myImage"
-        onChange={(event) => {
-          console.log(event.target.files[0]);
-          setSelectedImage(event.target.files[0]);
-          console.log((selectedImage));
-        }}
-      />
-    </div>
+              <input type="submit" />
+          </form>
+      </div>
   );
-};
+}
 
-export default UploadAndDisplayImage;
+export default TestUploadFile;

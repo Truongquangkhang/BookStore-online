@@ -9,12 +9,12 @@ module.exports.getAll = async(req, res)=>{
     }
 }
 module.exports.createAuthor = async(req,res)=>{
+    console.log(req.body);
     try {
         const author = new Author({
             name: req.body.name,
             image: req.body.image
         })
-        console.log(author);
         await author.save()
         res.status(200).json("ADD")
     } catch (error) {

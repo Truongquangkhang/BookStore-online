@@ -7,6 +7,7 @@ import BookList from './Components/TestRedux';
 import AddBook from './Features/AddBook';
 import FormAddAuthor from './Components/Form_Control/FormAddAuthor';
 import FormAddCategory from './Components/Form_Control/FormAddCategory'
+import TestUploadFile from './Components/Form_Control/UploadFile';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,7 +42,12 @@ const router = createBrowserRouter([
       {
         path: '/category/add',
         element: <FormAddCategory />
+      },
+      {
+        path: '/test/add',
+        element: <TestUploadFile />
       }
+
     ]
   },
 
