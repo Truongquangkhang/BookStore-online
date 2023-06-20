@@ -41,10 +41,10 @@ module.exports.Login = async (req, res) => {
                     if(result){
                         let user = await User.findOne({account: rs._id})
                         let tk = token({user},process.env.SECRETKEY)
-                        res.status(200).json(tk)
+                        res.status(200).json({access_token: tk})
                     }
                     else{
-                        res.json("password invalid")
+                        res.status(200).json({ err: "password invalid" })
                     }
                 })
             }

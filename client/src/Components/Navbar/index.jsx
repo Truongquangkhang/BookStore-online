@@ -1,14 +1,29 @@
 import { NavLink } from "react-router-dom";
 import './styles.scss'
-
-
+import { useSelector, useDispatch } from "react-redux";
+import { Button } from "@mui/material";
+import * as actions from '../../Redux/Actions';
+import React, { useState } from 'react';
 const Navbar = () => {
+  const dispatch = useDispatch()
+
+  const [localState, setLocalState] = useState(false);
   const activeNavbar = {
     color: "white",
     background: "#003A57",
     borderRadius: "8px",
   };
 
+  const handlerLogout = React.useCallback(() => {
+    dispatch(actions.authAction.logout())
+    setLocalState(false)
+  }, [dispatch]);
+  
+  React.useEffect(() => {
+    localStorage.getItem('access_token')?setLocalState(true):setLocalState(false)
+    
+  },[setLocalState]);
+  
   return (
     <nav className="navbar">
       <h1>Bookang</h1>
@@ -17,7 +32,7 @@ const Navbar = () => {
           to="/"
           style={({ isActive }) => isActive ? activeNavbar : {}}
         >
-            Home
+          Home
         </NavLink>
         <NavLink
           to="/book"
@@ -25,6 +40,30 @@ const Navbar = () => {
         >
           Books
         </NavLink>
+      </div>
+      <div className="login_register">
+        {
+          localState ?
+            <>
+              <Button onClick={handlerLogout}>Logout</Button>
+            </>
+            :
+            <>
+              <NavLink
+                to="/login"
+                style={({ isActive }) => isActive ? activeNavbar : {}}
+              >
+                Login
+              </NavLink>
+              <NavLink
+                to="/register"
+                style={({ isActive }) => isActive ? activeNavbar : {}}
+              >
+                Register
+              </NavLink>
+            </>
+
+        }
       </div>
     </nav>
   );

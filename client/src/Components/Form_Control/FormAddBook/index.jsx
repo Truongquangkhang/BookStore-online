@@ -1,11 +1,10 @@
-import { Button, Input, TextField, InputLabel, } from '@mui/material';
+import { Button, Input, InputLabel, TextField, } from '@mui/material';
 import React from 'react';
-import { useState } from 'react';
 import { useForm } from "react-hook-form";
-import './styles.scss'
+import apiBook from '../../../API/apiBook';
 import SelectAuthor from '../SelectAuthor';
 import SelectCategory from '../SelectCategory';
-import apiBook from '../../../API/apiBook';
+import './styles.scss';
 function FormAddBook() {
     const { control, handleSubmit, register } = useForm({
         defaultValues: {
@@ -39,6 +38,8 @@ function FormAddBook() {
                 formData.append(key, value);
             }
             apiBook.createBook(formData)
+
+            window.location.href = '/';
         } catch (error) {
             console.log(error);
         }

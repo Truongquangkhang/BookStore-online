@@ -1,4 +1,5 @@
 export const INIT_STATE ={
+    
     Book: {
         data: [],
         test: false
@@ -8,5 +9,10 @@ export const INIT_STATE ={
     },
     Category:{
         data: []
+    },
+    Auth:{
+        user: '',
+        isLogged: false,
+        isLogging: false,
     }
 }

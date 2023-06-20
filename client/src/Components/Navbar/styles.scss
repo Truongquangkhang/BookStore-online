@@ -1,22 +1,33 @@
 .navbar {
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    max-width: 600px;
-    margin: 0 auto;
-    border-bottom: 1px solid #f2f2f2;
-  }
-  .navbar h1 {
-    color: #003A57;
-  }
-  .navbar .links {
-    margin-left: auto;
-  }
-  .navbar a {
-    margin-left: 16px;
-    text-decoration: none;
-    padding: 6px;
-  }
-  .navbar a:hover {
-    color: #003A57;
-  }
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.navbar h1 {
+  color: #003A57;
+}
+
+.navbar .links {
+  margin-left: auto;
+}
+
+.navbar a {
+  margin-left: 16px;
+  text-decoration: none;
+  padding: 6px;
+}
+
+.navbar a:hover {
+  color: #003A57;
+}
+
+.login_register {
+  margin-left: auto;
+  position: relative;
+  left: 450px;
+}

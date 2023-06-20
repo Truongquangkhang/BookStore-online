@@ -4,12 +4,15 @@ import { useForm } from "react-hook-form";
 import './styles.scss'
 import apiAuthor from '../../../API/apiAuthor';
 
+
+
 function FormAddAuthor() {
     const {  handleSubmit, register } = useForm();
     const onSubmit = (data)=>{
         console.log(data);
         try {
             apiAuthor.createAuthor(data)
+            window.history.back()
         } catch (error) {
             console.log(error);
         }

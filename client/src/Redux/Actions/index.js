@@ -23,3 +23,10 @@ export const getCategories = createActions({
     getCategoriesSuccess: (payload)=>payload,
     getCategoriesFailure: (err)=>err
 })
+
+export const authAction = createActions({
+    loginRequest: (payload)=>payload,
+    loginSuccess: (payload)=>payload,
+    loginFailure: (err)=>err,
+    logout: undefined
+})

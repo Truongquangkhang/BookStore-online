@@ -5,7 +5,9 @@ const MainLayout = () => {
   return (
     <div className="Container">
       <div className="Header">
+        <header>
         <Navbar />
+        </header>
       </div>
       <div className="Sidebar">
       </div>
