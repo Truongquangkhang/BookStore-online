@@ -6,10 +6,8 @@ const MainLayout = () => {
     <div className="Container">
       <div className="Header">
         <header>
-        <Navbar />
+          <Navbar />
         </header>
-      </div>
-      <div className="Sidebar">
       </div>
       <div className="wrapper-body">
         <Outlet />

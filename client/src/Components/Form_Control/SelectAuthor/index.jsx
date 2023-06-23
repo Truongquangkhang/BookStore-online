@@ -16,20 +16,28 @@ function SelectAuthor(props) {
 
     }, [dispatch]);
 
+    const options = authors.map((author) => ({
+        value: author._id,
+        label: author.name,
+
+    }))
 
     return (
+
         <div>
             <Controller
                 name={name}
                 control={control}
-                render={({ field }) => <Select
-                    {...field}
-                    isMulti
-                    options={authors.map((author)=>({
-                        value: author._id, 
-                        label: author.name
-                   }))}
-                />}
+
+                // Set the default options
+                render={({ field }) => (
+                    <Select
+                    //defaultValue={[{value: "647da7e41d56786ca8c1e8ae", lable: "Nguyễn Hà An" }]} 
+                        {...field}
+                        isMulti
+                        options={options}
+                    />
+                )}
             />
         </div>
     );

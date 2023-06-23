@@ -11,10 +11,10 @@ const upload = multer({
 })
 
 Router.get('/', bookController.getALL)
-//Router.post('/test',upload.array("images"),uploadFileMiddlerware.ValidationCreateBook,bookController.test)
+Router.get('/:id',bookController.detailBook)
 Router.post('/',upload.array("images"),uploadFileMiddlerware.ValidationCreateBook, bookController.addBook)
-Router.put('/:id', authMiddleware.authLogin, bookController.updateBook)
-Router.delete('/:id', authMiddleware.authLogin, bookController.deleteBook)
+Router.put('/:id',upload.array("images"),uploadFileMiddlerware.ValidationCreateBook, bookController.updateBook)
+Router.delete('/:id', bookController.deleteBook)
 
 
 

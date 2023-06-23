@@ -9,6 +9,7 @@ import FormAddAuthor from './Components/Form_Control/FormAddAuthor';
 import FormAddCategory from './Components/Form_Control/FormAddCategory'
 import TestUploadFile from './Components/Form_Control/UploadFile';
 import Login from './Components/Login';
+import Register from './Features/Register';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -17,16 +18,18 @@ const router = createBrowserRouter([
       {
         path: "/book",
         element:<Books/>,
-        children: [
-          {
-            path: ':idbook',
-            element: <DetailBook />
-          }
-        ]
+      },
+      {
+        path: "/book/:idbook",
+        element: <DetailBook />
       },
       {
         path: '/login',
         element: <Login></Login>
+      },
+      {
+        path: '/register',
+        element: <Register />
       },
       {
         path: '/form',

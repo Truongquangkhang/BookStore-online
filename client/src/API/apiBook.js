@@ -13,10 +13,22 @@ const apiBook = {
             }
           })
     },
-    test: (Book)=>{
-        const url = "/book/test";
-        return axiosClient.post(url,Book)
+    detailBook: (id)=>{
+        const url = `/book/${id}`;
+        return axiosClient.get(url)
         
+    },
+    updateBook: (id,Book)=>{
+      const url = `/book/${id}`
+      return axiosClient.put(url,Book,{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+    },
+    deleteBook: (id)=>{
+      const url = `/book/${id}`
+      return axiosClient.delete(url)
     }
 }
 
