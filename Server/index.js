@@ -1,6 +1,8 @@
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+require('dotenv').config();
+
 // const fileupload = require("express-fileupload");
 var cookieParser = require('cookie-parser')
 const auth = require('./Routes/auth')
@@ -13,11 +15,8 @@ const category = require('./Routes/category')
 const authMiddleware = require('./Middleware/authMiddleware')
 
 
-require('dotenv').config()
-
 const app = express()
 const port = 3000
-
 app.use(cookieParser(process.env.SECRETKEY))
 app.use(morgan('common'))
 app.use(express.json())

@@ -14,5 +14,6 @@ export const INIT_STATE ={
         user: '',
         isLogged: false,
         isLogging: false,
+        errorMessage: ''
     }
 }

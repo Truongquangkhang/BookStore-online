@@ -14,22 +14,24 @@ const Auth = (state = INIT_STATE.Auth, action)=>{
                 ...state,
                 isLogged: true,
                 isLogging: false,
+                errorMessage: '',
                 user: action.payload
                 
             }
         case getType(authAction.loginFailure()):
-            console.log("2");
             return {
                 ...state,
                 isLogged: false,
-                isLogging: false
+                isLogging: false,
+                errorMessage: action.payload
             }
         case getType(authAction.logout):
             return {
                 ...state,
                 isLogged: false,
                 isLogging: false,
-                user: undefined
+                user: undefined,
+                errorMessage: ''
             }
         default:
             return state

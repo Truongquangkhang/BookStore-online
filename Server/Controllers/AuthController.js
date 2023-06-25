@@ -2,7 +2,7 @@ const Account = require('../Models/MongoDB/Account')
 const User = require('../Models/MongoDB/User')
 const bcrypt = require("bcrypt");
 var jwt = require('jsonwebtoken');
-const saltRounds = 10
+require('dotenv').config();
 
 const token = (data, secret) => {
     return jwt.sign(data, secret, { expiresIn: '1h' })
@@ -12,11 +12,10 @@ module.exports.Register = async (req, res) => {
     Account.findOne({ username: req.body.username })
         .then(rs => {
             if (rs) {
-                console.log("EEEERRRRORRRR");
-                res.status(401).json("Email already exists")
+                res.status(200).json({err:"Email already exists"})
             }
             else {
-                bcrypt.genSalt(saltRounds, function (err, salt) {
+                bcrypt.genSalt(process.env.COSTFACTOR, function (err, salt) {
                     bcrypt.hash(req.body.password, salt, function (err, hash) {
                         let account = new Account({
                             username: req.body.username,
@@ -53,12 +52,12 @@ module.exports.Login = async (req, res) => {
                         res.status(200).json({ access_token: tk })
                     }
                     else {
-                        res.status(200).json({ err: "password invalid" })
+                        res.status(200).json({ err: "wrong password" })
                     }
                 })
             }
             else {
-                res.status(200).json({ err: "username invalid" })
+                res.status(200).json({ err: "username not exists" })
             }
         })
         .catch(err => res.status(400).json(err))

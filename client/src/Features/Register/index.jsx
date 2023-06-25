@@ -1,19 +1,23 @@
 import { Button, Input, InputLabel } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import apiBook from '../../API/apiBook';
 import apiAuthorization from '../../API/apiAuthorization';
 
 function Register() {
+    const [errorMessage, setErrorMessage] = useState('');
     const { handleSubmit, register } = useForm({
         defaultValues: {
         }
     });
     const handleRegister = async (data) => {
         try {
-            await apiAuthorization.register(data)
-
-            window.location.href = '/login'
+            const msg = await apiAuthorization.register(data)
+            if (msg.data.err) {
+                setErrorMessage(msg.data.err)
+            }
+            else {
+                window.location.href = '/login'
+            }
         } catch (error) {
             console.log(error);
         }
@@ -34,7 +38,10 @@ function Register() {
                     <Input {...register("password", { required: true })}></Input>
                 </div>
                 <div>
-                    <Button type="submit">Submit</Button>
+                    {errorMessage && <p>{errorMessage}</p>}
+                </div>
+                <div>
+                    <button type="submit">Submit</button>
                 </div>
             </form>
         </div>

@@ -16,7 +16,7 @@ function FormAddBook() {
 
     // Functions to preview multiple images
     
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         try {
             data.author = data.author.map((t) => (t.value))
             data.category = data.category.map((t) => (t.value))
@@ -37,7 +37,7 @@ function FormAddBook() {
             for (const [key, value] of Object.entries(data)) {
                 formData.append(key, value);
             }
-            apiBook.createBook(formData)
+            await apiBook.createBook(formData)
 
             window.location.href = '/';
         } catch (error) {
