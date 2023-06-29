@@ -21,8 +21,7 @@ const typeDefs = gql`
         authors: [Author],
         author(_id:ID): Author,
         categories: [Category],
-        category(_id:ID): Category,
-        
+        category(_id:ID): Category, 
     }
     type Mutation {
         createBook (name: String, categories: [ID], authors: [ID]): Book,

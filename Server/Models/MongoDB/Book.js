@@ -25,7 +25,7 @@ const Book = new mongoose.Schema({
             } catch (error) {
                 console.log(error);
             }
-        }
+        }, 
     },
     versionKey: false
 })

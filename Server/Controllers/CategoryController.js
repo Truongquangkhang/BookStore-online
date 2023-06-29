@@ -18,3 +18,12 @@ module.exports.getAll = async(req,res)=>{
         res.status(400).json({err: error})
     }
 }
+module.exports.detailCategory = async(req,res)=>{
+    try {
+        let category = await Category.findById(req.params.id)
+        let Detail = await category.DetailCategory()
+        res.status(200).json(Detail)
+    } catch (error) {
+        res.status(400).json({err: error})
+    }
+}

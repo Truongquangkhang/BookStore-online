@@ -5,9 +5,17 @@ const Category = require('../Models/MongoDB/Category')
 module.exports.getALL = async (req, res) => {
     try {
         let books = await Book.find()
+        if(req.body.categories!=='ALL'){
+           const categories = req.body.categories
+           books = books.filter((e)=>categories.every((element) => e.category.toString().includes(element)))
+        }
+        if(req.body.authors!=='ALL'){
+            const authors = req.body.authors
+            books = books.filter((e)=>authors.every((element) => e.author.toString().includes(element)))
+        }
         res.status(200).json(books)
     } catch (error) {
-        res.status(400).json(error)
+        res.status(400).json({err: error})
     }
 }
 module.exports.detailBook = async (req, res) => {
@@ -66,7 +74,6 @@ module.exports.addBook = async (req, res) => {
 }
 
 module.exports.updateBook = async (req, res) => {
-    console.log(req.body);
     await Book.updateOne(
         { _id: req.params.id },
         {

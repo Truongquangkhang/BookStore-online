@@ -1,4 +1,23 @@
+module.exports.ValidationFilter = (req,res,next) =>{
+    if(req.query.categories){
+        const categories = req.query.categories.split(',')
+        req.body.categories = categories
+    }
+    else{
+        req.body.categories = "ALL"
+    }
 
+    if(req.query.authors){
+        const authors = req.query.authors.split(',')
+        req.body.authors = authors
+    }
+    else{
+        req.body.authors = "ALL"
+    }
+
+    next();
+
+}
 module.exports.ValidationsCreate = (req, res, next) => {
     if (!req.body.id) {
         res.status(400).json("Required id")

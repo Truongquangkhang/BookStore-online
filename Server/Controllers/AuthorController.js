@@ -2,7 +2,7 @@ const Author = require('../Models/MongoDB/Author')
 
 module.exports.getAll = async(req, res)=>{
     try {
-        authors = await Author.find()
+        let authors = await Author.find()
         res.status(200).json(authors)
     } catch (error) {
         res.status(400).json({error: error})
@@ -22,7 +22,25 @@ module.exports.createAuthor = async(req,res)=>{
     }
 }
 module.exports.AuthorDetail = async (req, res) => {
-    await Author.findById(req.params.id)
-        .then(rs => { res.status(200).json(rs) })
-        .catch(error => res.status(400).json(error))
+    try {
+        let author = await Author.findById(req.params.id)
+        let books = await author.DetailAuthor()
+        res.status(200).json(books)
+    } catch (error) {
+        res.status(400).json(error)
+    }
+}
+
+module.exports.getAuthorAndAmount = async(req, res)=>{
+    try {
+        let authors = await Author.find()
+
+        authors.forEach(async (element) =>  {
+            console.log(await element.AuthorDetail());
+        });
+
+        res.status(200).json(authors)
+    } catch (error) {
+        res.status(400).json({err: error})
+    }
 }
