@@ -5,7 +5,7 @@ function Filter({ category, author, filter }) {
     const [listCategory, setListCategory] = useState([])
     const [listAuthor, setListAuthor]= useState([])
 
-    const handlerClickCate = (event)=>{
+    const handlerClickCate =async (event)=>{
         let temp = listCategory
         if(event.target.checked){
             temp.push(event.target.value);
@@ -16,7 +16,7 @@ function Filter({ category, author, filter }) {
         setListCategory(temp)
 
         filter({
-            categories: listCategory,
+            categories: temp,
             authors: listAuthor 
         })
         
@@ -33,7 +33,7 @@ function Filter({ category, author, filter }) {
         setListAuthor(temp)
         filter({
             categories: listCategory,
-            authors: listAuthor 
+            authors: temp 
         })
         
     }

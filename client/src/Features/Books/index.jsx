@@ -1,26 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BookList from './Components/BookList';
 
 import { useDispatch, useSelector } from 'react-redux';
 import Buttons from '../../Components/Buttons';
-import * as actions from '../../Redux/Actions';
-import './styles.scss'
 import Filter from '../../Components/Filter';
-import apiBook from '../../API/apiBook';
+import * as actions from '../../Redux/Actions';
+import './styles.scss';
 function Books() {
+    const [filter, setFilter] = useState({
+        categories: [],
+        authors: []
+    })
     const dispatch = useDispatch();
     const books = useSelector((state) => state.Book.data);
     const categories = useSelector((state)=>state.Category.data)
     const authors =  useSelector((state)=>state.Author.data)
-    const handleFilter = async (value)=>{
-        const temp = await apiBook.getByFilter(value.categories, value.authors)
-        console.log(temp);
-    }
+    const handleFilter = React.useCallback( (value)=>{
+        //const temp = await apiBook.getByFilter(value.categories, value.authors)
+        setFilter(value)
+    },[])
     React.useEffect(() => {
-        dispatch(actions.getBooks.getBooksRequest());
+        dispatch(actions.getBooks.getBooksRequest(filter));
         dispatch(actions.getCategories.getCategoriesRequest());
         dispatch(actions.getAuthors.getAuthorsRequest());
-    }, [dispatch]);
+    }, [dispatch, filter]);
 
     
     return (
@@ -38,3 +41,4 @@ function Books() {
 }
 
 export default Books;
+

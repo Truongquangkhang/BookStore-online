@@ -7,7 +7,7 @@ export const getType = (action)=>{
 
 
 export const getBooks =  createActions({
-    getBooksRequest: undefined,
+    getBooksRequest: (payload)=>payload,
     getBooksSuccess: (payload)=>payload,
     getBooksFailure: (err)=>err
 })

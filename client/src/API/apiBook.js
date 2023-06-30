@@ -9,7 +9,10 @@ const apiBook = {
     const url = '/book';
     return axiosClient.get(url)
   },
-  getByFilter: (categories, authors)=>{
+  
+  getByFilter: (data)=>{
+    const categories=data.categories
+    const authors = data.authors
     const url = `/book?categories=${categories.join(',')}&authors=${authors.join(',')}`;
     return axiosClient.get(url)
   },

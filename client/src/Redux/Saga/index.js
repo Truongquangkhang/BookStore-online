@@ -5,9 +5,9 @@ import apiBook from '../../API/apiBook'
 import apiCategory from '../../API/apiCategory'
 import * as action from '../Actions'
 
-function* getBooks() {
+function* getBooks(actions) {
     try {
-        const books = yield call(apiBook.getAll)
+        const books = yield call(apiBook.getByFilter,actions.payload)
         yield put(action.getBooks.getBooksSuccess(books.data))
     } catch (error) {
         console.log(error);
