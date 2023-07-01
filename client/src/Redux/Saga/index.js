@@ -40,9 +40,9 @@ function* HandlerLogin(actions){
             const cat = yield call(apiAuthorization.login, actions.payload)
             
             if(cat.data.access_token){
-                
                 yield put(action.authAction.loginSuccess(cat.data))
                 localStorage.setItem("access_token", cat.data.access_token)
+                localStorage.setItem("user",JSON.stringify(cat.data.user))
                 window.location.href = '/';
             }
             else{
@@ -62,6 +62,7 @@ function* HandlerLogin(actions){
 function HandlerLogout(){
     if(localStorage.getItem("access_token")){
         localStorage.removeItem("access_token")
+        localStorage.removeItem('user')
     }
     else{
         console.log("chưa đăng nhập");

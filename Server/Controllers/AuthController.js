@@ -9,13 +9,14 @@ const token = (data, secret) => {
 }
 
 module.exports.Register = async (req, res) => {
+    console.log(req.body);
     Account.findOne({ username: req.body.username })
         .then(rs => {
             if (rs) {
                 res.status(200).json({err:"Email already exists"})
             }
             else {
-                bcrypt.genSalt(process.env.COSTFACTOR, function (err, salt) {
+                bcrypt.genSalt(10, function (err, salt) {
                     bcrypt.hash(req.body.password, salt, function (err, hash) {
                         let account = new Account({
                             username: req.body.username,

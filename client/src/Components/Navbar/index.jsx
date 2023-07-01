@@ -1,12 +1,13 @@
-import { NavLink } from "react-router-dom";
-import './styles.scss'
-import { useSelector, useDispatch } from "react-redux";
-import { Button } from "@mui/material";
-import * as actions from '../../Redux/Actions';
 import React, { useState } from 'react';
+import { useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
+import * as actions from '../../Redux/Actions';
+import DropDownMenu from "../DropDownMenu";
+import './styles.scss';
 const Navbar = () => {
-  const dispatch = useDispatch()
 
+
+  const dispatch = useDispatch()
   const [localState, setLocalState] = useState(false);
   const activeNavbar = {
     color: "white",
@@ -18,12 +19,12 @@ const Navbar = () => {
     dispatch(actions.authAction.logout())
     setLocalState(false)
   }, [dispatch]);
-  
+
   React.useEffect(() => {
-    localStorage.getItem('access_token')?setLocalState(true):setLocalState(false)
-    
-  },[setLocalState]);
-  
+    localStorage.getItem('access_token') ? setLocalState(true) : setLocalState(false)
+
+  }, [setLocalState]);
+
   return (
     <nav className="navbar">
       <h1>Bookang</h1>
@@ -45,7 +46,8 @@ const Navbar = () => {
         {
           localState ?
             <>
-              <Button onClick={handlerLogout}>Logout</Button>
+              {/* <Button onClick={handlerLogout}>Logout</Button> */}
+              <DropDownMenu handlerLogout={handlerLogout}/>
             </>
             :
             <>

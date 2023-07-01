@@ -11,7 +11,7 @@ export const INIT_STATE ={
         data: []
     },
     Auth:{
-        user: '',
+        user: {},
         isLogged: false,
         isLogging: false,
         errorMessage: ''

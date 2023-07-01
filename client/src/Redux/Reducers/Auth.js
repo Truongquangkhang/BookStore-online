@@ -9,13 +9,12 @@ const Auth = (state = INIT_STATE.Auth, action)=>{
                 isLogging: true
             }
         case getType(authAction.loginSuccess()):
-            console.log(state);
             return{
                 ...state,
                 isLogged: true,
                 isLogging: false,
                 errorMessage: '',
-                user: action.payload
+                user: action.payload.user
                 
             }
         case getType(authAction.loginFailure()):
@@ -30,7 +29,7 @@ const Auth = (state = INIT_STATE.Auth, action)=>{
                 ...state,
                 isLogged: false,
                 isLogging: false,
-                user: undefined,
+                user: {},
                 errorMessage: ''
             }
         default:
