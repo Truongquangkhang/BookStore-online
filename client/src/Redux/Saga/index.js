@@ -4,6 +4,7 @@ import apiAuthorization from '../../API/apiAuthorization'
 import apiBook from '../../API/apiBook'
 import apiCategory from '../../API/apiCategory'
 import * as action from '../Actions'
+import apiUser from '../../API/apiUser'
 
 function* getBooks(actions) {
     try {
@@ -33,6 +34,16 @@ function* getCategories() {
         yield put(action.getCategories.getCategoriesFailure(error))
     }
 }
+function* getUsers(){
+    try {
+        const user = yield call(apiUser.getUser)
+
+        yield put(action.getusers.getUsersSuccess(user.data))
+    } catch (error) {
+        console.log(error);
+        yield put(action.getusers.getUsersFailure(error))
+    }
+}
 
 function* HandlerLogin(actions){
     if(!localStorage.getItem("access_token")){
@@ -42,7 +53,6 @@ function* HandlerLogin(actions){
             if(cat.data.access_token){
                 yield put(action.authAction.loginSuccess(cat.data))
                 localStorage.setItem("access_token", cat.data.access_token)
-                localStorage.setItem("user",JSON.stringify(cat.data.user))
                 window.location.href = '/';
             }
             else{
@@ -62,7 +72,6 @@ function* HandlerLogin(actions){
 function HandlerLogout(){
     if(localStorage.getItem("access_token")){
         localStorage.removeItem("access_token")
-        localStorage.removeItem('user')
     }
     else{
         console.log("chưa đăng nhập");
@@ -77,6 +86,7 @@ function* mysaga() {
     yield takeLatest(action.getCategories.getCategoriesRequest, getCategories);
     yield takeLatest(action.authAction.loginRequest, HandlerLogin);
     yield takeLatest(action.authAction.logout, HandlerLogout)
+    yield takeLatest(action.getusers.getUsersRequest,getUsers)
 }
 
 

@@ -31,6 +31,10 @@ module.exports.AuthorDetail = async (req, res) => {
     }
 }
 
+
+
+
+
 module.exports.getAuthorAndAmount = async(req, res)=>{
     try {
         let authors = await Author.find()

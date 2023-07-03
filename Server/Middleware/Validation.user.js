@@ -1,7 +1,5 @@
-var jwt = require('jsonwebtoken');
-
-
-module.exports.authLogin = (req, res, next) => {
+const jwt = require('jsonwebtoken')
+module.exports.validatUser = (req, res, next)=>{
     const authorizationHeader = req.headers.authorization;
 
     if (authorizationHeader) {
@@ -11,13 +9,12 @@ module.exports.authLogin = (req, res, next) => {
                 res.status(403).json({ err: "Vui long dang nhap" })
             }
             else{
-                if(decoded.user.role === 'admin'){
-                    console.log(decoded.user.role);
-                
+                if(decoded.user._id){
+                    req.body.idUser = decoded.user._id
                     next()
                 }
                 else{
-                    res.status(403).json({err: "you do not have access"})
+                    res.status(403).json({err: "Vui long dang nhap"})
                 }
                 
             }
@@ -27,5 +24,4 @@ module.exports.authLogin = (req, res, next) => {
     else{
         res.status(400).json({err:"Vui long dang nhap"})
     }
-    
 }

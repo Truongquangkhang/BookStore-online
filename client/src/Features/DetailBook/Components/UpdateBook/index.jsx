@@ -17,7 +17,7 @@ function UpdateBook({ book }) {
         value: T.id,
         lable: T.name
     }))
-    const { control, handleSubmit, register } = useForm({
+    const { control, handleSubmit } = useForm({
         defaultValues: {
             name: book.name,
             prices: book.prices,

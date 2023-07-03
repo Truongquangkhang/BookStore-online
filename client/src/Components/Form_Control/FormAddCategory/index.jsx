@@ -1,11 +1,11 @@
-import { Button, Input, TextField, InputLabel,  } from '@mui/material';
+import { Button, Input, InputLabel } from '@mui/material';
 import React from 'react';
 import { useForm } from "react-hook-form";
-import './styles.scss'
-import apiCategory from '../../../API/apiCategory'
+import apiCategory from '../../../API/apiCategory';
+import './styles.scss';
 
 function FormAddBook() {
-    const { control, handleSubmit, register } = useForm({
+    const {  handleSubmit, register } = useForm({
         defaultValues: {
             
         }

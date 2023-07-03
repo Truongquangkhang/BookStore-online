@@ -23,16 +23,16 @@ function ImageUploader({ handleChange,files }) {
     handleChange(selectedImages)
     setSelectedImages(updatedImages);
   };
-  async function createFile(url) {
-    let response = await fetch(url);
-    let data = await response.blob();
-    let metadata = {
-      type: 'image/jpeg'
-    };
-    let file = new File([data], "test.jpg", metadata);
+  // async function createFile(url) {
+  //   let response = await fetch(url);
+  //   let data = await response.blob();
+  //   let metadata = {
+  //     type: 'image/jpeg'
+  //   };
+  //   let file = new File([data], "test.jpg", metadata);
     
-    console.log(file);
-  }
+  //   console.log(file);
+  // }
   return (
     <div >
       <div className='preview-img'>

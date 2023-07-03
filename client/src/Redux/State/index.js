@@ -1,16 +1,19 @@
-export const INIT_STATE ={
-    
+export const INIT_STATE = {
+
     Book: {
         data: [],
         test: false
     },
-    Author:{
+    Author: {
         data: []
     },
-    Category:{
+    Category: {
         data: []
     },
-    Auth:{
+    User: {
+        data: {}
+    },
+    Auth: {
         user: {},
         isLogged: false,
         isLogging: false,

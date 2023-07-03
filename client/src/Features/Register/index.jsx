@@ -1,4 +1,4 @@
-import { Button, Input, InputLabel } from '@mui/material';
+import { Input, InputLabel } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import apiAuthorization from '../../API/apiAuthorization';

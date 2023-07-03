@@ -1,15 +1,18 @@
-import Books from './Features/Books';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import FormAddAuthor from './Components/Form_Control/FormAddAuthor';
+import FormAddCategory from './Components/Form_Control/FormAddCategory';
+import Login from './Components/Login';
 import MainLayout from './Components/MainLayout/index';
-import DetailBook from './Features/DetailBook';
-import Todo from './Features/ToDo';
 import BookList from './Components/TestRedux';
 import AddBook from './Features/AddBook';
-import FormAddAuthor from './Components/Form_Control/FormAddAuthor';
-import FormAddCategory from './Components/Form_Control/FormAddCategory'
-import TestUploadFile from './Components/Form_Control/UploadFile';
-import Login from './Components/Login';
+import Books from './Features/Books';
+import DetailBook from './Features/DetailBook';
 import Register from './Features/Register';
+import Todo from './Features/ToDo';
+
+import Profile from './Features/Profile';
+import ReadingBook from './Features/ReadingBook';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -52,8 +55,12 @@ const router = createBrowserRouter([
         element: <FormAddCategory />
       },
       {
-        path: '/test/add',
-        element: <TestUploadFile />
+        path: '/user/profile',
+        element: <Profile />
+      },
+      {
+        path: '/view',
+        element: <ReadingBook />
       }
 
     ]

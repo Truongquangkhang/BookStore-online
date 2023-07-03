@@ -12,7 +12,7 @@ con.connect()
 const author = require('./Routes/author')
 const book = require('./Routes/book')
 const category = require('./Routes/category')
-const authMiddleware = require('./Middleware/authMiddleware')
+const user = require('./Routes/user')
 
 
 const app = express()
@@ -30,6 +30,7 @@ app.use('/author', author)
 // app.use('/book',authMiddleware ,site)
 app.use('/auth', auth)
 app.use('/category', category)
+app.use('/user',user)
 
 
 

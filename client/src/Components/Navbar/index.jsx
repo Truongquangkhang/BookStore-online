@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import * as actions from '../../Redux/Actions';
 import DropDownMenu from "../DropDownMenu";
 import './styles.scss';
 const Navbar = () => {
-
-
+  const User = useSelector((state)=>state.User.data)
   const dispatch = useDispatch()
   const [localState, setLocalState] = useState(false);
   const activeNavbar = {
@@ -21,9 +20,14 @@ const Navbar = () => {
   }, [dispatch]);
 
   React.useEffect(() => {
-    localStorage.getItem('access_token') ? setLocalState(true) : setLocalState(false)
-
-  }, [setLocalState]);
+    if(localStorage.getItem('access_token')){
+      dispatch(actions.getusers.getUsersRequest())
+      setLocalState(true)
+    }
+    else{
+      setLocalState(false)
+    }
+  }, [dispatch,setLocalState]);
 
   return (
     <nav className="navbar">
@@ -47,7 +51,7 @@ const Navbar = () => {
           localState ?
             <>
               {/* <Button onClick={handlerLogout}>Logout</Button> */}
-              <DropDownMenu handlerLogout={handlerLogout}/>
+              <DropDownMenu handlerLogout={handlerLogout} User={User}/>
             </>
             :
             <>

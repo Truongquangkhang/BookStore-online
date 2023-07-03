@@ -30,3 +30,9 @@ export const authAction = createActions({
     loginFailure: (err)=>err,
     logout: undefined
 })
+
+export const getusers = createActions({
+    getUsersRequest: undefined,
+    getUsersSuccess: (payload)=>payload,
+    getUsersFailure: (err)=>err
+})
