@@ -1,3 +1,4 @@
+import axios from 'axios';
 import axiosClient from './axiosClient'
 const token = localStorage.getItem('access_token');
 // const headers = {
@@ -9,9 +10,9 @@ const apiBook = {
     const url = '/book';
     return axiosClient.get(url)
   },
-  
-  getByFilter: (data)=>{
-    const categories=data.categories
+
+  getByFilter: (data) => {
+    const categories = data.categories
     const authors = data.authors
     const url = `/book?categories=${categories.join(',')}&authors=${authors.join(',')}`;
     return axiosClient.get(url)
@@ -46,6 +47,15 @@ const apiBook = {
         'Authorization': `Bearer ${token}`
       }
     })
+  },
+
+  getPDFOfBook: async (id) => {
+
+    const url = '/book/test'
+    const response = await axiosClient.get(url)
+    // const arrayBuffer = response.data
+    // const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
+    return response.data
   }
 }
 

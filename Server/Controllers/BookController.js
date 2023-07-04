@@ -1,21 +1,23 @@
 const Book = require('../Models/MongoDB/Book')
 const Author = require('../Models/MongoDB/Author')
 const Category = require('../Models/MongoDB/Category')
+const firebase = require('../Firebase/firebase')
+const { getStorage, ref, uploadBytes, getDownloadURL, getBytes } = require("firebase/storage");
 
 module.exports.getALL = async (req, res) => {
     try {
         let books = await Book.find()
-        if(req.body.categories!=='ALL'){
-           const categories = req.body.categories
-           books = books.filter((e)=>categories.every((element) => e.category.toString().includes(element)))
+        if (req.body.categories !== 'ALL') {
+            const categories = req.body.categories
+            books = books.filter((e) => categories.every((element) => e.category.toString().includes(element)))
         }
-        if(req.body.authors!=='ALL'){
+        if (req.body.authors !== 'ALL') {
             const authors = req.body.authors
-            books = books.filter((e)=>authors.every((element) => e.author.toString().includes(element)))
+            books = books.filter((e) => authors.every((element) => e.author.toString().includes(element)))
         }
         res.status(200).json(books)
     } catch (error) {
-        res.status(400).json({err: error})
+        res.status(400).json({ err: error })
     }
 }
 module.exports.detailBook = async (req, res) => {
@@ -93,13 +95,70 @@ module.exports.deleteBook = async (req, res) => {
         .then(rs => res.status(200).json(rs))
         .catch(err => res.status(400).json(err))
 }
-const firebase = require('../Firebase/firebase')
+
 module.exports.test = async (req, res) => {
     const files = req.files.images
     for (let i = 0; i < files.length; i++) {
         const blob = firebase.bucket.upload(files[i])
     }
 
+}
+module.exports.viewBook = async (req, res) => {
+    try {
+        const storage = getStorage(firebase.app)
+        const storageRef = ref(storage, 'abc.pdf')
+        const file = await getBytes(storageRef)
+        const buffer = Buffer.from(file);
+        res.setHeader('Content-Type', 'application/pdf')
+        res.setHeader('Content-Disposition', 'attachment; filename=name.Pdf')
+        res.setHeader('Content-Length', buffer.length)
+        res.status(200).json(buffer)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+
+
+
+
+    //   const filePath = 'C:\\Users\\win\\Downloads\\102200312_NguyenVanHoangNhan (1).pdf'; // Đường dẫn tới file PDF
+
+    //   res.sendFile(filePath, (err) => {
+    //     if (err) {
+    //       console.error('Error sending file:', err);
+    //       res.status(err.status).end();
+    //     } else {
+    //       console.log('File sent successfully');
+    //     }
+    //   });
+
+
+    // const storage = getStorage();
+    // getDownloadURL(ref(storage, 'abc.pdf'))
+    //     .then((url) => {
+    //         // `url` is the download URL for 'images/stars.jpg'
+
+    //         // This can be downloaded directly:
+    //         const xhr = new XMLHttpRequest();
+    //         xhr.responseType = 'blob';
+    //         xhr.onload = (event) => {
+    //             const blob = xhr.response;
+    //         };
+    //         xhr.open('GET', url);
+    //         xhr.send();
+
+    //         // Or inserted into an <img> element
+    //         const img = document.getElementById('myimg');
+    //         img.setAttribute('src', url);
+
+    //         console.log(img);
+    //         res.send(img)
+
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //         res.send(error)
+    //         // Handle any errors
+    //     });
 }
 
 
