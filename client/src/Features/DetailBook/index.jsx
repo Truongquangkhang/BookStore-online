@@ -22,7 +22,7 @@ function DetailBook() {
     }
     const handlerClick = async ()=>{
         try {
-            
+            window.location.href = `/book/view/${idbook}`
         } catch (error) {
             
         }

@@ -2,16 +2,28 @@ const firebase = require('../Firebase/firebase')
 const { getStorage, ref, uploadBytes, getDownloadURL } = require("firebase/storage");
 
 
-const createFileName = (originalname) => {
-  let filename = "image-" + Date.now() + "-" + originalname
+const createFileName = (originalname, type) => {
+  let filename = type + "-" + Date.now() + "-" + originalname
   return filename
 
 }
-const uploadFiletoFireBase = async(files) => {
+const uploadFiletoFireBase = async (files) => {
   const storage = getStorage(firebase.app)
-  var filesname = [];
+  var filesname = {
+    pdf: [],
+    image: []
+  }
   for (const file of files) {
-    const storageRef = ref(storage, createFileName(file.originalname));
+    let storageRef
+    let type = 'image'
+    if (file.mimetype === 'application/pdf') {
+      storageRef = ref(storage, createFileName(file.originalname, 'pdf'));
+      type = 'pdf'
+    }
+    else {
+      storageRef = ref(storage, createFileName(file.originalname, 'image'));
+    }
+
     const metadata = {
       contentType: file.mimetype
     };
@@ -19,7 +31,7 @@ const uploadFiletoFireBase = async(files) => {
     await uploadBytes(storageRef, new Uint8Array(file.buffer), metadata);
 
     const imageUrl = await getDownloadURL(storageRef);
-    filesname.push(imageUrl.toString());
+    filesname[type].push(imageUrl.toString());
   }
 
   return filesname
@@ -27,6 +39,11 @@ const uploadFiletoFireBase = async(files) => {
 }
 
 module.exports.ValidationCreateBook = (async (req, res, next) => {
+  // if (req.file) {
+  //   console.log(req.file);
+  //   const filePDF = await uploadFiletoFireBase(req.file)
+  //   req.body.file = filePDF.pdf
+  // }
   if (!req.files || req.files.length === 0) {
     res.status(400).send('No files uploaded');
     return;
@@ -34,10 +51,12 @@ module.exports.ValidationCreateBook = (async (req, res, next) => {
 
   try {
     const filesname = await uploadFiletoFireBase(req.files)
+    console.log(filesname);
     req.body.author = req.body.author.split(',')
     req.body.category = req.body.category.split(',')
-    req.body.images = filesname
-    
+    req.body.images = filesname.image
+    req.body.file = filesname.pdf[0].toString()
+    console.log(filesname);
 
     next()
 

@@ -65,7 +65,8 @@ module.exports.addBook = async (req, res) => {
         prices: req.body.prices,
         images: req.body.images,
         category: req.body.category,
-        author: req.body.author
+        author: req.body.author,
+        file: req.body.file
     })
     try {
         await book.save()
@@ -105,16 +106,22 @@ module.exports.test = async (req, res) => {
 }
 module.exports.viewBook = async (req, res) => {
     try {
-        const storage = getStorage(firebase.app)
-        const storageRef = ref(storage, 'abc.pdf')
-        const file = await getBytes(storageRef)
-        const buffer = Buffer.from(file);
-        res.setHeader('Content-Type', 'application/pdf')
-        res.setHeader('Content-Disposition', 'attachment; filename=name.Pdf')
-        res.setHeader('Content-Length', buffer.length)
-        res.status(200).json(buffer)
+        const book = await Book.findById(req.params.id)
+        if (book) {
+            const storage = getStorage(firebase.app)
+            const storageRef = ref(storage,book.file)
+            const file = await getBytes(storageRef)
+            const buffer = Buffer.from(file);
+            res.setHeader('Content-Type', 'application/pdf')
+            res.setHeader('Content-Disposition', 'attachment; filename=name.Pdf')
+            res.setHeader('Content-Length', buffer.length)
+            res.status(200).json(buffer)
+        }
+        else{
+            res.status(404).json({err: "This Book not found"})
+        }
     } catch (error) {
-        res.status(500).json(error)
+        res.status(500).json({err: error})
     }
 
 

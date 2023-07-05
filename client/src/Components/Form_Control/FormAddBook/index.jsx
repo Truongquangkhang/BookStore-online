@@ -20,23 +20,23 @@ function FormAddBook() {
         try {
             data.author = data.author.map((t) => (t.value))
             data.category = data.category.map((t) => (t.value))
-
-
             const fileList = data.images // FileList
-
-
             const formData = new FormData();
             for (let i = 0; i < fileList.length; i++) {
-                formData.append("images",fileList[i])
+                formData.append("files",fileList[i])
             }
-
+            formData.append('files',data.pdf[0])
+            console.log(data.pdf);
             delete data.images
+            delete data.pdf
             // for (const key of Object.keys(multipleImages)) {
             //     formData.append('images', data.images[key]);
             //}
             for (const [key, value] of Object.entries(data)) {
                 formData.append(key, value);
             }
+
+            console.log(formData);
             await apiBook.createBook(formData)
 
             window.location.href = '/';
@@ -73,6 +73,14 @@ function FormAddBook() {
                     type="file"
                     multiple
                     {...register('images', { required: true })}
+                />
+            </div>
+            <div className='unit'>
+                <InputLabel>PDF of book</InputLabel>
+
+                <input
+                    type="file"
+                    {...register('pdf', { required: true })}
                 />
             </div>
             <div className='unit'>

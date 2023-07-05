@@ -7,6 +7,7 @@ const Book = new mongoose.Schema({
     booksubtitle: String,
     prices: String,
     images:[String],
+    file: {type: String, default: 'abc.pdf'},
     category: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',

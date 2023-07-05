@@ -79,6 +79,16 @@ function HandlerLogout(){
     
 }
 
+function* handlerGetContent(actions){
+    try {
+        const filePDF = yield call(apiBook.getPDFOfBook, actions.payload)
+        console.log("Saga", filePDF);
+        yield put(action.getContent.getContentSuccess(filePDF))
+    } catch (error) {
+        yield put(action.getContent.getContentFailure())
+    }
+}
+
 
 function* mysaga() {
     yield takeLatest(action.getBooks.getBooksRequest, getBooks);
@@ -87,6 +97,7 @@ function* mysaga() {
     yield takeLatest(action.authAction.loginRequest, HandlerLogin);
     yield takeLatest(action.authAction.logout, HandlerLogout)
     yield takeLatest(action.getusers.getUsersRequest,getUsers)
+    yield takeLatest(action.getContent.getContentRequest,handlerGetContent)
 }
 
 

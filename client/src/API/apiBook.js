@@ -51,10 +51,8 @@ const apiBook = {
 
   getPDFOfBook: async (id) => {
 
-    const url = '/book/test'
+    const url = `/book/view/${id}`
     const response = await axiosClient.get(url)
-    // const arrayBuffer = response.data
-    // const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
     return response.data
   }
 }

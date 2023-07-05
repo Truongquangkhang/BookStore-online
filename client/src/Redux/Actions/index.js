@@ -36,3 +36,10 @@ export const getusers = createActions({
     getUsersSuccess: (payload)=>payload,
     getUsersFailure: (err)=>err
 })
+
+
+export const getContent = createActions({
+    getContentRequest: (payload)=>payload,
+    getContentSuccess: (payload)=>payload,
+    getContentFailure: (err)=>err
+})

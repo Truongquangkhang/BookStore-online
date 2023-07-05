@@ -18,5 +18,8 @@ export const INIT_STATE = {
         isLogged: false,
         isLogging: false,
         errorMessage: ''
+    },
+    Content: {
+        data: {}
     }
 }

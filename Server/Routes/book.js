@@ -11,9 +11,11 @@ const upload = multer({
 })
 
 Router.get('/', Validations.ValidationFilter ,bookController.getALL)
-Router.get('/test',bookController.viewBook)
+Router.get('/view/:id',bookController.viewBook)
 Router.get('/:id',bookController.detailBook)
-Router.post('/',authMiddleware.authLogin,upload.array("images"), uploadFileMiddlerware.ValidationCreateBook, bookController.addBook)
+Router.post('/',authMiddleware.authLogin,upload.array("files"), uploadFileMiddlerware.ValidationCreateBook, bookController.addBook)
 Router.put('/:id',authMiddleware.authLogin,upload.array("images"),uploadFileMiddlerware.ValidationCreateBook, bookController.updateBook)
 Router.delete('/:id',authMiddleware.authLogin ,bookController.deleteBook)
 module.exports = Router
+
+
